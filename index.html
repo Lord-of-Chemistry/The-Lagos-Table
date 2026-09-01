@@ -1,489 +1,1556 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gourmet Haven | Fine Dining Experience</title>
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>The Lagos Table | Contemporary Nigerian Dining</title>
+    <meta
+      name="description"
+      content="The Lagos Table — contemporary Nigerian dining, warm hospitality and unforgettable flavours in Victoria Island, Lagos."
+    />
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🍽️%3C/text%3E%3C/svg%3E"
+    />
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
+
     <style>
-        .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('http://static.photos/food/1200x630/42');
-            background-size: cover;
-            background-position: center;
-        }
-        .menu-item:hover .menu-overlay {
-            opacity: 1;
-        }
-        .menu-overlay {
-            transition: all 0.3s ease;
-        }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        overflow-x: hidden;
+      }
+
+      .hero-bg {
+        background-image:
+          linear-gradient(rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.68)),
+          url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2000&q=85");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .menu-item {
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .menu-item:hover {
+        transform: translateY(-4px);
+      }
+
+      .gallery-card img {
+        transition: transform 0.6s ease;
+      }
+
+      .gallery-card:hover img {
+        transform: scale(1.08);
+      }
+
+      .gallery-overlay {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .gallery-card:hover .gallery-overlay {
+        opacity: 1;
+      }
+
+      .modal {
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.25s ease;
+      }
+
+      .modal.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .modal-content {
+        transform: scale(0.92);
+        transition: transform 0.25s ease;
+      }
+
+      .modal.active .modal-content {
+        transform: scale(1);
+      }
+
+      .toast {
+        transform: translateY(120px);
+        opacity: 0;
+        transition: all 0.35s ease;
+      }
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      .nav-scrolled {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      input,
+      select,
+      textarea {
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
     </style>
-</head>
-<body class="font-sans bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg fixed w-full z-10">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center">
-                    <i data-feather="coffee" class="text-amber-600 mr-2"></i>
-                    <span class="text-xl font-bold text-amber-600">Gourmet Haven</span>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="text-gray-800 hover:text-amber-600 transition">Home</a>
-                    <a href="#menu" class="text-gray-800 hover:text-amber-600 transition">Menu</a>
-                    <a href="#about" class="text-gray-800 hover:text-amber-600 transition">About</a>
-                    <a href="#gallery" class="text-gray-800 hover:text-amber-600 transition">Gallery</a>
-                    <a href="#contact" class="text-gray-800 hover:text-amber-600 transition">Contact</a>
-                </div>
-                <div class="md:hidden">
-                    <button id="menu-btn" class="text-gray-800 focus:outline-none">
-                        <i data-feather="menu"></i>
-                    </button>
-                </div>
+  </head>
+
+  <body class="font-sans bg-gray-50 text-gray-800">
+    <!-- =========================
+     NAVIGATION
+========================== -->
+    <nav
+      id="navbar"
+      class="bg-white fixed top-0 left-0 w-full z-40 transition-all duration-300"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+          <!-- Logo -->
+          <a href="#home" class="flex items-center group">
+            <i data-feather="coffee" class="text-amber-600 mr-2"></i>
+
+            <div>
+              <span class="block text-xl font-bold text-amber-600 leading-none">
+                The Lagos Table
+              </span>
+              <span class="text-xs text-gray-500 tracking-widest uppercase">
+                Eat. Laugh. Connect.
+              </span>
             </div>
+          </a>
+
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="#home"
+              class="nav-link text-gray-800 hover:text-amber-600 transition"
+              >Home</a
+            >
+            <a
+              href="#menu"
+              class="nav-link text-gray-800 hover:text-amber-600 transition"
+              >Menu</a
+            >
+            <a
+              href="#about"
+              class="nav-link text-gray-800 hover:text-amber-600 transition"
+              >Our Story</a
+            >
+            <a
+              href="#gallery"
+              class="nav-link text-gray-800 hover:text-amber-600 transition"
+              >Gallery</a
+            >
+            <a
+              href="#contact"
+              class="nav-link text-gray-800 hover:text-amber-600 transition"
+              >Contact</a
+            >
+
+            <a
+              href="#contact"
+              class="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2.5 rounded-full font-semibold transition"
+            >
+              Reserve a Table
+            </a>
+          </div>
+
+          <!-- Mobile Button -->
+          <button
+            id="menu-btn"
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            class="md:hidden text-gray-800 focus:outline-none"
+          >
+            <i data-feather="menu"></i>
+          </button>
         </div>
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white pb-4 px-4">
-            <a href="#home" class="block py-2 text-gray-800 hover:text-amber-600 transition">Home</a>
-            <a href="#menu" class="block py-2 text-gray-800 hover:text-amber-600 transition">Menu</a>
-            <a href="#about" class="block py-2 text-gray-800 hover:text-amber-600 transition">About</a>
-            <a href="#gallery" class="block py-2 text-gray-800 hover:text-amber-600 transition">Gallery</a>
-            <a href="#contact" class="block py-2 text-gray-800 hover:text-amber-600 transition">Contact</a>
-        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div
+        id="mobile-menu"
+        class="hidden md:hidden bg-white border-t border-gray-100 px-4 pb-5"
+      >
+        <a
+          href="#home"
+          class="mobile-link block py-3 text-gray-800 hover:text-amber-600 transition"
+        >
+          Home
+        </a>
+
+        <a
+          href="#menu"
+          class="mobile-link block py-3 text-gray-800 hover:text-amber-600 transition"
+        >
+          Menu
+        </a>
+
+        <a
+          href="#about"
+          class="mobile-link block py-3 text-gray-800 hover:text-amber-600 transition"
+        >
+          Our Story
+        </a>
+
+        <a
+          href="#gallery"
+          class="mobile-link block py-3 text-gray-800 hover:text-amber-600 transition"
+        >
+          Gallery
+        </a>
+
+        <a
+          href="#contact"
+          class="mobile-link block py-3 text-gray-800 hover:text-amber-600 transition"
+        >
+          Contact
+        </a>
+
+        <a
+          href="#contact"
+          class="mobile-link block text-center bg-amber-600 hover:bg-amber-700 text-white font-semibold px-5 py-3 rounded-lg mt-2 transition"
+        >
+          Reserve a Table
+        </a>
+      </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero-bg min-h-screen flex items-center justify-center text-white pt-20">
-        <div class="text-center px-4" data-aos="fade-up">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">Savor the Extraordinary</h1>
-            <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">Experience culinary excellence with our handcrafted dishes made from the finest ingredients</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#menu" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-full transition">View Menu</a>
-                <a href="#contact" class="bg-transparent hover:bg-white hover:text-gray-900 border-2 border-white text-white font-bold py-3 px-6 rounded-full transition">Reservations</a>
-            </div>
+    <!-- =========================
+     HERO
+========================== -->
+    <section
+      id="home"
+      class="hero-bg min-h-screen flex items-center justify-center text-white pt-20"
+    >
+      <div class="text-center px-5" data-aos="fade-up">
+        <p
+          class="uppercase tracking-[0.3em] text-amber-300 font-semibold mb-5 text-sm"
+        >
+          Welcome to The Lagos Table
+        </p>
+
+        <h1
+          class="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 leading-tight"
+        >
+          Lagos Flavours.<br />
+          <span class="text-amber-400">Elevated.</span>
+        </h1>
+
+        <p
+          class="text-lg md:text-2xl mb-9 max-w-2xl mx-auto text-gray-200 leading-relaxed"
+        >
+          Contemporary Nigerian cuisine, timeless classics and warm Lagos
+          hospitality — all served at one table.
+        </p>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a
+            href="#menu"
+            class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3.5 px-7 rounded-full transition shadow-lg"
+          >
+            Explore Our Menu
+          </a>
+
+          <a
+            href="#contact"
+            class="bg-transparent hover:bg-white hover:text-gray-900 border-2 border-white text-white font-bold py-3.5 px-7 rounded-full transition"
+          >
+            Book a Table
+          </a>
         </div>
+
+        <div
+          class="mt-12 flex justify-center items-center gap-2 text-gray-300 text-sm"
+        >
+          <i data-feather="map-pin" class="w-4 h-4"></i>
+          Victoria Island, Lagos
+        </div>
+      </div>
     </section>
 
-    <!-- Menu Section -->
+    <!-- =========================
+     MENU
+========================== -->
     <section id="menu" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Menu</h2>
-                <div class="w-24 h-1 bg-amber-600 mx-auto"></div>
-                <p class="text-gray-600 mt-6 max-w-2xl mx-auto">Each dish is carefully crafted to bring you an unforgettable dining experience</p>
-            </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <p
+            class="uppercase tracking-widest text-amber-600 font-semibold text-sm mb-3"
+          >
+            From our kitchen
+          </p>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Appetizers -->
-                <div data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                        <i data-feather="circle" class="text-amber-600 mr-2"></i> Appetizers
-                    </h3>
-                    <div class="space-y-6">
-                        <div class="border-b border-gray-200 pb-6">
-                            <div class="flex justify-between items-start">
-                                <h4 class="font-bold text-gray-800">Bruschetta</h4>
-                                <span class="font-bold text-amber-600">$8.99</span>
-                            </div>
-                            <p class="text-gray-600 mt-2">Toasted bread topped with tomatoes, garlic, and fresh basil</p>
-                        </div>
-                        <div class="border-b border-gray-200 pb-6">
-                            <div class="flex justify-between items-start">
-                                <h4 class="font-bold text-gray-800">Calamari</h4>
-                                <span class="font-bold text-amber-600">$12.99</span>
-                            </div>
-                            <p class="text-gray-600 mt-2">Crispy fried squid served with lemon aioli</p>
-                        </div>
-                        <div class="border-b border-gray-200 pb-6">
-                            <div class="flex justify-between items-start">
-                                <h4 class="font-bold text-gray-800">Caprese Salad</h4>
-                                <span class="font-bold text-amber-600">$10.99</span>
-                            </div>
-                            <p class="text-gray-600 mt-2">Fresh mozzarella, tomatoes, and basil drizzled with balsamic glaze</p>
-                        </div>
-                    </div>
-                </div>
+          <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-4">
+            Our Menu
+          </h2>
 
-                <!-- Main Courses -->
-                <div data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                        <i data-feather="circle" class="text-amber-600 mr-2"></i> Main Courses
-                    </h3>
-                    <div class="space-y-6">
-                        <div class="border-b border-gray-200 pb-6">
-                            <div class="flex justify-between items-start">
-                                <h4 class="font-bold text-gray-800">Filet Mignon</h4>
-                                <span class="font-bold text-amber-600">$32.99</span>
-                            </div>
-                            <p class="text-gray-600 mt-2">8oz tender beef filet with roasted vegetables and red wine reduction</p>
-                        </div>
-                        <div class="border-b border-gray-200 pb-6">
-                            <div class="flex justify-between items-start">
-                                <h4 class="font-bold text-gray-800">Grilled Salmon</h4>
-                                <span class="font-bold text-amber-600">$24.99</span>
-                            </div>
-                            <p class="text-gray-600 mt-2">Atlantic salmon with lemon butter sauce and asparagus</p>
-                        </div>
-                        <div class="border-b border-gray-200 pb-6">
-                            <div class="flex justify-between items-start">
-                                <h4 class="font-bold text-gray-800">Mushroom Risotto</h4>
-                                <span class="font-bold text-amber-600">$18.99</span>
-                            </div>
-                            <p class="text-gray-600 mt-2">Creamy arborio rice with wild mushrooms and parmesan</p>
-                        </div>
-                    </div>
-                </div>
+          <div class="w-24 h-1 bg-amber-600 mx-auto"></div>
 
-                <!-- Desserts -->
-                <div data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                        <i data-feather="circle" class="text-amber-600 mr-2"></i> Desserts
-                    </h3>
-                    <div class="space-y-6">
-                        <div class="border-b border-gray-200 pb-6">
-                            <div class="flex justify-between items-start">
-                                <h4 class="font-bold text-gray-800">Tiramisu</h4>
-                                <span class="font-bold text-amber-600">$8.99</span>
-                            </div>
-                            <p class="text-gray-600 mt-2">Classic Italian dessert with layers of coffee-soaked ladyfingers</p>
-                        </div>
-                        <div class="border-b border-gray-200 pb-6">
-                            <div class="flex justify-between items-start">
-                                <h4 class="font-bold text-gray-800">Chocolate Lava Cake</h4>
-                                <span class="font-bold text-amber-600">$9.99</span>
-                            </div>
-                            <p class="text-gray-600 mt-2">Warm chocolate cake with a molten center, served with vanilla ice cream</p>
-                        </div>
-                        <div class="border-b border-gray-200 pb-6">
-                            <div class="flex justify-between items-start">
-                                <h4 class="font-bold text-gray-800">Crème Brûlée</h4>
-                                <span class="font-bold text-amber-600">$8.99</span>
-                            </div>
-                            <p class="text-gray-600 mt-2">Rich custard topped with a layer of caramelized sugar</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <p class="text-gray-600 mt-6 max-w-2xl mx-auto">
+            Familiar Nigerian favourites meet modern culinary techniques and
+            carefully selected ingredients.
+          </p>
         </div>
+
+        <div class="grid md:grid-cols-3 gap-10">
+          <!-- Starters -->
+          <div data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-2xl font-bold text-gray-800 mb-7 flex items-center">
+              <span
+                class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center mr-3"
+              >
+                <i data-feather="coffee" class="text-amber-600 w-5"></i>
+              </span>
+              Starters
+            </h3>
+
+            <div class="space-y-7">
+              <div class="menu-item border-b border-gray-200 pb-6">
+                <div class="flex justify-between items-start gap-4">
+                  <h4 class="font-bold text-gray-800">Peppered Snail</h4>
+                  <span class="font-bold text-amber-600 whitespace-nowrap">
+                    ₦8,500
+                  </span>
+                </div>
+
+                <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                  Tender snail sautéed with onions, peppers and our signature
+                  spicy sauce.
+                </p>
+              </div>
+
+              <div class="menu-item border-b border-gray-200 pb-6">
+                <div class="flex justify-between items-start gap-4">
+                  <h4 class="font-bold text-gray-800">Suya Skewers</h4>
+                  <span class="font-bold text-amber-600 whitespace-nowrap">
+                    ₦7,500
+                  </span>
+                </div>
+
+                <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                  Char-grilled beef strips coated in aromatic suya spice, served
+                  with onions and tomatoes.
+                </p>
+              </div>
+
+              <div class="menu-item border-b border-gray-200 pb-6">
+                <div class="flex justify-between items-start gap-4">
+                  <h4 class="font-bold text-gray-800">Prawn Pepper Soup</h4>
+                  <span class="font-bold text-amber-600 whitespace-nowrap">
+                    ₦9,000
+                  </span>
+                </div>
+
+                <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                  Fragrant seafood broth infused with Nigerian herbs, spices and
+                  fresh prawns.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Courses -->
+          <div data-aos="fade-up" data-aos-delay="200">
+            <h3 class="text-2xl font-bold text-gray-800 mb-7 flex items-center">
+              <span
+                class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center mr-3"
+              >
+                <i data-feather="star" class="text-amber-600 w-5"></i>
+              </span>
+              Main Courses
+            </h3>
+
+            <div class="space-y-7">
+              <div class="menu-item border-b border-gray-200 pb-6">
+                <div class="flex justify-between items-start gap-4">
+                  <h4 class="font-bold text-gray-800">
+                    Jollof Rice & Grilled Chicken
+                  </h4>
+                  <span class="font-bold text-amber-600 whitespace-nowrap">
+                    ₦12,500
+                  </span>
+                </div>
+
+                <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                  Smoky party-style jollof, grilled chicken, fried plantain and
+                  fresh salad.
+                </p>
+              </div>
+
+              <div class="menu-item border-b border-gray-200 pb-6">
+                <div class="flex justify-between items-start gap-4">
+                  <h4 class="font-bold text-gray-800">Seafood Okra</h4>
+                  <span class="font-bold text-amber-600 whitespace-nowrap">
+                    ₦15,000
+                  </span>
+                </div>
+
+                <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                  Slow-cooked okra with prawns, calamari and fish, served with
+                  your choice of swallow.
+                </p>
+              </div>
+
+              <div class="menu-item border-b border-gray-200 pb-6">
+                <div class="flex justify-between items-start gap-4">
+                  <h4 class="font-bold text-gray-800">Braised Beef & Yam</h4>
+                  <span class="font-bold text-amber-600 whitespace-nowrap">
+                    ₦14,000
+                  </span>
+                </div>
+
+                <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                  Slow-braised beef served with creamy yam mash and a rich
+                  pepper reduction.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Desserts -->
+          <div data-aos="fade-up" data-aos-delay="300">
+            <h3 class="text-2xl font-bold text-gray-800 mb-7 flex items-center">
+              <span
+                class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center mr-3"
+              >
+                <i data-feather="heart" class="text-amber-600 w-5"></i>
+              </span>
+              Desserts
+            </h3>
+
+            <div class="space-y-7">
+              <div class="menu-item border-b border-gray-200 pb-6">
+                <div class="flex justify-between items-start gap-4">
+                  <h4 class="font-bold text-gray-800">Chin Chin Parfait</h4>
+                  <span class="font-bold text-amber-600 whitespace-nowrap">
+                    ₦5,500
+                  </span>
+                </div>
+
+                <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                  Crunchy chin chin layered with vanilla cream and caramelised
+                  banana.
+                </p>
+              </div>
+
+              <div class="menu-item border-b border-gray-200 pb-6">
+                <div class="flex justify-between items-start gap-4">
+                  <h4 class="font-bold text-gray-800">Chocolate Lava Cake</h4>
+                  <span class="font-bold text-amber-600 whitespace-nowrap">
+                    ₦6,500
+                  </span>
+                </div>
+
+                <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                  Warm chocolate cake with a molten centre, served with vanilla
+                  ice cream.
+                </p>
+              </div>
+
+              <div class="menu-item border-b border-gray-200 pb-6">
+                <div class="flex justify-between items-start gap-4">
+                  <h4 class="font-bold text-gray-800">Puff-Puff Sundae</h4>
+                  <span class="font-bold text-amber-600 whitespace-nowrap">
+                    ₦5,000
+                  </span>
+                </div>
+
+                <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                  Fresh puff-puff, vanilla ice cream, chocolate sauce and
+                  roasted peanuts.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-14">
+          <p class="text-gray-500 text-sm">
+            Prices are subject to change based on seasonal ingredients.
+          </p>
+        </div>
+      </div>
     </section>
 
-    <!-- About Section -->
+    <!-- =========================
+     ABOUT
+========================== -->
     <section id="about" class="py-20 bg-gray-100">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-col lg:flex-row items-center">
-                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10" data-aos="fade-right">
-                    <img src="http://static.photos/restaurant/640x360/5" alt="Restaurant Interior" class="rounded-lg shadow-xl">
-                </div>
-                <div class="lg:w-1/2" data-aos="fade-left">
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Our Story</h2>
-                    <div class="w-24 h-1 bg-amber-600 mb-6"></div>
-                    <p class="text-gray-600 mb-6">Founded in 2010, Gourmet Haven began as a small bistro with a passion for exceptional food and warm hospitality. Our chef, trained in Michelin-starred restaurants across Europe, brings world-class techniques to locally-sourced ingredients.</p>
-                    <p class="text-gray-600 mb-8">Today, we're proud to be recognized as one of the city's premier dining destinations, offering an intimate atmosphere where every dish tells a story.</p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="flex items-center">
-                            <i data-feather="check-circle" class="text-amber-600 mr-2"></i>
-                            <span class="text-gray-800">Farm-to-table ingredients</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i data-feather="check-circle" class="text-amber-600 mr-2"></i>
-                            <span class="text-gray-800">Seasonal menu updates</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i data-feather="check-circle" class="text-amber-600 mr-2"></i>
-                            <span class="text-gray-800">Award-winning wine list</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i data-feather="check-circle" class="text-amber-600 mr-2"></i>
-                            <span class="text-gray-800">Sustainable practices</span>
-                        </div>
-                    </div>
-                </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row items-center gap-12">
+          <div class="lg:w-1/2" data-aos="fade-right">
+            <img
+              src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1000&q=85"
+              alt="Elegant restaurant interior at The Lagos Table"
+              class="rounded-2xl shadow-2xl w-full h-[450px] object-cover"
+            />
+          </div>
+
+          <div class="lg:w-1/2" data-aos="fade-left">
+            <p
+              class="uppercase tracking-widest text-amber-600 font-semibold text-sm mb-3"
+            >
+              Our story
+            </p>
+
+            <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-6">
+              Born in Lagos.<br />
+              <span class="text-amber-600">Made for everyone.</span>
+            </h2>
+
+            <div class="w-24 h-1 bg-amber-600 mb-7"></div>
+
+            <p class="text-gray-600 mb-6 leading-relaxed">
+              The Lagos Table started in 2016 with one simple idea: Nigerian
+              food deserves a seat at every great dining table.
+            </p>
+
+            <p class="text-gray-600 mb-8 leading-relaxed">
+              From our kitchen in Victoria Island, we combine the bold flavours
+              we grew up with and contemporary techniques to create food that
+              feels both familiar and completely new.
+            </p>
+
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div class="flex items-center">
+                <i data-feather="check-circle" class="text-amber-600 mr-3"></i>
+                <span class="text-gray-800">Locally sourced ingredients</span>
+              </div>
+
+              <div class="flex items-center">
+                <i data-feather="check-circle" class="text-amber-600 mr-3"></i>
+                <span class="text-gray-800">Freshly prepared daily</span>
+              </div>
+
+              <div class="flex items-center">
+                <i data-feather="check-circle" class="text-amber-600 mr-3"></i>
+                <span class="text-gray-800">Contemporary Nigerian cuisine</span>
+              </div>
+
+              <div class="flex items-center">
+                <i data-feather="check-circle" class="text-amber-600 mr-3"></i>
+                <span class="text-gray-800">Warm Lagos hospitality</span>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- Gallery Section -->
+    <!-- =========================
+     GALLERY
+========================== -->
     <section id="gallery" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Gallery</h2>
-                <div class="w-24 h-1 bg-amber-600 mx-auto"></div>
-                <p class="text-gray-600 mt-6 max-w-2xl mx-auto">A visual journey through our culinary creations and elegant ambiance</p>
-            </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <p
+            class="uppercase tracking-widest text-amber-600 font-semibold text-sm mb-3"
+          >
+            Take a look
+          </p>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="relative overflow-hidden rounded-lg group" data-aos="zoom-in">
-                    <img src="http://static.photos/food/640x360/1" alt="Dish 1" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                        <i data-feather="zoom-in" class="text-white text-2xl"></i>
-                    </div>
-                </div>
-                <div class="relative overflow-hidden rounded-lg group" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="http://static.photos/food/640x360/2" alt="Dish 2" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                        <i data-feather="zoom-in" class="text-white text-2xl"></i>
-                    </div>
-                </div>
-                <div class="relative overflow-hidden rounded-lg group" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="http://static.photos/food/640x360/3" alt="Dish 3" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                        <i data-feather="zoom-in" class="text-white text-2xl"></i>
-                    </div>
-                </div>
-                <div class="relative overflow-hidden rounded-lg group" data-aos="zoom-in" data-aos-delay="100">
-                    <img src="http://static.photos/restaurant/640x360/4" alt="Restaurant" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                        <i data-feather="zoom-in" class="text-white text-2xl"></i>
-                    </div>
-                </div>
-                <div class="relative overflow-hidden rounded-lg group" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="http://static.photos/food/640x360/5" alt="Dish 5" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                        <i data-feather="zoom-in" class="text-white text-2xl"></i>
-                    </div>
-                </div>
-                <div class="relative overflow-hidden rounded-lg group" data-aos="zoom-in" data-aos-delay="300">
-                    <img src="http://static.photos/food/640x360/6" alt="Dish 6" class="w-full h-64 object-cover transition duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                        <i data-feather="zoom-in" class="text-white text-2xl"></i>
-                    </div>
-                </div>
-            </div>
+          <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-4">
+            From Our Table
+          </h2>
+
+          <div class="w-24 h-1 bg-amber-600 mx-auto"></div>
+
+          <p class="text-gray-600 mt-6 max-w-2xl mx-auto">
+            A little taste of the food, people and atmosphere that make The
+            Lagos Table what it is.
+          </p>
         </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Gallery 1 -->
+          <button
+            type="button"
+            class="gallery-card relative overflow-hidden rounded-xl group text-left focus:outline-none"
+            data-image="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=85"
+            data-title="Our Signature Grill"
+            data-aos="zoom-in"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80"
+              alt="Grilled dish"
+              class="w-full h-72 object-cover"
+            />
+
+            <div
+              class="gallery-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+            >
+              <span class="bg-white text-gray-800 rounded-full p-3">
+                <i data-feather="zoom-in"></i>
+              </span>
+            </div>
+          </button>
+
+          <!-- Gallery 2 -->
+          <button
+            type="button"
+            class="gallery-card relative overflow-hidden rounded-xl group text-left focus:outline-none"
+            data-image="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85"
+            data-title="Our Dining Room"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80"
+              alt="Restaurant dining room"
+              class="w-full h-72 object-cover"
+            />
+
+            <div
+              class="gallery-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+            >
+              <span class="bg-white text-gray-800 rounded-full p-3">
+                <i data-feather="zoom-in"></i>
+              </span>
+            </div>
+          </button>
+
+          <!-- Gallery 3 -->
+          <button
+            type="button"
+            class="gallery-card relative overflow-hidden rounded-xl group text-left focus:outline-none"
+            data-image="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85"
+            data-title="Fresh Ingredients"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=900&q=80"
+              alt="Fresh food ingredients"
+              class="w-full h-72 object-cover"
+            />
+
+            <div
+              class="gallery-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+            >
+              <span class="bg-white text-gray-800 rounded-full p-3">
+                <i data-feather="zoom-in"></i>
+              </span>
+            </div>
+          </button>
+
+          <!-- Gallery 4 -->
+          <button
+            type="button"
+            class="gallery-card relative overflow-hidden rounded-xl group text-left focus:outline-none"
+            data-image="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1200&q=85"
+            data-title="An Evening at The Lagos Table"
+            data-aos="zoom-in"
+            data-aos-delay="100"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=900&q=80"
+              alt="Restaurant atmosphere"
+              class="w-full h-72 object-cover"
+            />
+
+            <div
+              class="gallery-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+            >
+              <span class="bg-white text-gray-800 rounded-full p-3">
+                <i data-feather="zoom-in"></i>
+              </span>
+            </div>
+          </button>
+
+          <!-- Gallery 5 -->
+          <button
+            type="button"
+            class="gallery-card relative overflow-hidden rounded-xl group text-left focus:outline-none"
+            data-image="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=85"
+            data-title="Fresh From the Kitchen"
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80"
+              alt="Food served at restaurant"
+              class="w-full h-72 object-cover"
+            />
+
+            <div
+              class="gallery-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+            >
+              <span class="bg-white text-gray-800 rounded-full p-3">
+                <i data-feather="zoom-in"></i>
+              </span>
+            </div>
+          </button>
+
+          <!-- Gallery 6 -->
+          <button
+            type="button"
+            class="gallery-card relative overflow-hidden rounded-xl group text-left focus:outline-none"
+            data-image="https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=1200&q=85"
+            data-title="The Heart of Our Kitchen"
+            data-aos="zoom-in"
+            data-aos-delay="300"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1551218808-94e220e084d2?auto=format&fit=crop&w=900&q=80"
+              alt="Restaurant kitchen"
+              class="w-full h-72 object-cover"
+            />
+
+            <div
+              class="gallery-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+            >
+              <span class="bg-white text-gray-800 rounded-full p-3">
+                <i data-feather="zoom-in"></i>
+              </span>
+            </div>
+          </button>
+        </div>
+      </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- =========================
+     TESTIMONIALS
+========================== -->
     <section class="py-20 bg-amber-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">What Our Guests Say</h2>
-                <div class="w-24 h-1 bg-amber-600 mx-auto"></div>
-            </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <p
+            class="uppercase tracking-widest text-amber-600 font-semibold text-sm mb-3"
+          >
+            Our guests
+          </p>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex items-center mb-4">
-                        <div class="flex-shrink-0">
-                            <i data-feather="star" class="text-amber-400"></i>
-                            <i data-feather="star" class="text-amber-400"></i>
-                            <i data-feather="star" class="text-amber-400"></i>
-                            <i data-feather="star" class="text-amber-400"></i>
-                            <i data-feather="star" class="text-amber-400"></i>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-6">"The filet mignon was cooked to perfection, and the service was impeccable. We'll definitely be back for our anniversary next year!"</p>
-                    <div class="flex items-center">
-                        <img src="http://static.photos/people/200x200/1" alt="Sarah J." class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-bold text-gray-800">Sarah J.</h4>
-                            <p class="text-gray-600 text-sm">Regular Guest</p>
-                        </div>
-                    </div>
-                </div>
+          <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-4">
+            What Lagos Is Saying
+          </h2>
 
-                <div class="bg-white p-8 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex items-center mb-4">
-                        <div class="flex-shrink-0">
-                            <i data-feather="star" class="text-amber-400"></i>
-                            <i data-feather="star" class="text-amber-400"></i>
-                            <i data-feather="star" class="text-amber-400"></i>
-                            <i data-feather="star" class="text-amber-400"></i>
-                            <i data-feather="star" class="text-amber-400"></i>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-6">"As a food critic, I've dined at hundreds of restaurants. Gourmet Haven stands out for its innovative flavors and attention to detail."</p>
-                    <div class="flex items-center">
-                        <img src="http://static.photos/people/200x200/2" alt="Michael T." class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-bold text-gray-800">Michael T.</h4>
-                            <p class="text-gray-600 text-sm">Food Critic</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white p-8 rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="300">
-                    <div class="flex items-center mb-4">
-                        <div class="flex-shrink-0">
-                            <i data-feather="star" class="text-amber-400"></i>
-                            <i data-feather="star" class="text-amber-400"></i>
-                            <i data-feather="star" class="text-amber-400"></i>
-                            <i data-feather="star" class="text-amber-400"></i>
-                            <i data-feather="star" class="text-amber-400"></i>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-6">"The mushroom risotto was the best I've ever had. The ambiance was perfect for our date night. Highly recommend!"</p>
-                    <div class="flex items-center">
-                        <img src="http://static.photos/people/200x200/3" alt="Emily R." class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-bold text-gray-800">Emily R.</h4>
-                            <p class="text-gray-600 text-sm">First-time Guest</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <div class="w-24 h-1 bg-amber-600 mx-auto"></div>
         </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Testimonial 1 -->
+          <div class="bg-white p-8 rounded-2xl shadow-md" data-aos="fade-up">
+            <div class="flex mb-5 text-amber-400">
+              <i data-feather="star" class="fill-current"></i>
+              <i data-feather="star" class="fill-current"></i>
+              <i data-feather="star" class="fill-current"></i>
+              <i data-feather="star" class="fill-current"></i>
+              <i data-feather="star" class="fill-current"></i>
+            </div>
+
+            <p class="text-gray-600 mb-7 leading-relaxed">
+              "The jollof was absolutely beautiful. Smoky, rich and actually
+              tasted like party jollof. The service was also top-notch."
+            </p>
+
+            <div>
+              <h4 class="font-bold text-gray-800">Amaka E.</h4>
+              <p class="text-gray-500 text-sm">Victoria Island</p>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div
+            class="bg-white p-8 rounded-2xl shadow-md"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div class="flex mb-5 text-amber-400">
+              <i data-feather="star" class="fill-current"></i>
+              <i data-feather="star" class="fill-current"></i>
+              <i data-feather="star" class="fill-current"></i>
+              <i data-feather="star" class="fill-current"></i>
+              <i data-feather="star" class="fill-current"></i>
+            </div>
+
+            <p class="text-gray-600 mb-7 leading-relaxed">
+              "Perfect place for a proper dinner in Lagos. The food feels
+              Nigerian without being predictable. Loved the atmosphere."
+            </p>
+
+            <div>
+              <h4 class="font-bold text-gray-800">Tobi A.</h4>
+              <p class="text-gray-500 text-sm">Lekki</p>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div
+            class="bg-white p-8 rounded-2xl shadow-md"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <div class="flex mb-5 text-amber-400">
+              <i data-feather="star" class="fill-current"></i>
+              <i data-feather="star" class="fill-current"></i>
+              <i data-feather="star" class="fill-current"></i>
+              <i data-feather="star" class="fill-current"></i>
+              <i data-feather="star" class="fill-current"></i>
+            </div>
+
+            <p class="text-gray-600 mb-7 leading-relaxed">
+              "The seafood okra was fantastic. Everything arrived hot,
+              beautifully presented and full of flavour. Definitely coming
+              back."
+            </p>
+
+            <div>
+              <h4 class="font-bold text-gray-800">Chinonso O.</h4>
+              <p class="text-gray-500 text-sm">Ikoyi</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-800 text-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Contact Us</h2>
-                <div class="w-24 h-1 bg-amber-600 mx-auto"></div>
-                <p class="text-gray-300 mt-6 max-w-2xl mx-auto">We'd love to hear from you. Make a reservation or send us a message.</p>
-            </div>
+    <!-- =========================
+     CONTACT / RESERVATION
+========================== -->
+    <section id="contact" class="py-20 bg-gray-900 text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <p
+            class="uppercase tracking-widest text-amber-500 font-semibold text-sm mb-3"
+          >
+            Come dine with us
+          </p>
 
-            <div class="flex flex-col lg:flex-row gap-12">
-                <div class="lg:w-1/2" data-aos="fade-right">
-                    <h3 class="text-2xl font-bold mb-6">Make a Reservation</h3>
-                    <form class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="name" class="block mb-2">Full Name</label>
-                                <input type="text" id="name" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-amber-600">
-                            </div>
-                            <div>
-                                <label for="email" class="block mb-2">Email</label>
-                                <input type="email" id="email" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-amber-600">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="phone" class="block mb-2">Phone</label>
-                                <input type="tel" id="phone" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-amber-600">
-                            </div>
-                            <div>
-                                <label for="guests" class="block mb-2">Number of Guests</label>
-                                <select id="guests" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-amber-600">
-                                    <option>1 person</option>
-                                    <option>2 people</option>
-                                    <option>3 people</option>
-                                    <option>4 people</option>
-                                    <option>5+ people</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="date" class="block mb-2">Date</label>
-                                <input type="date" id="date" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-amber-600">
-                            </div>
-                            <div>
-                                <label for="time" class="block mb-2">Time</label>
-                                <select id="time" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-amber-600">
-                                    <option>6:00 PM</option>
-                                    <option>6:30 PM</option>
-                                    <option>7:00 PM</option>
-                                    <option>7:30 PM</option>
-                                    <option>8:00 PM</option>
-                                    <option>8:30 PM</option>
-                                    <option>9:00 PM</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="message" class="block mb-2">Special Requests</label>
-                            <textarea id="message" rows="3" class="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-amber-600"></textarea>
-                        </div>
-                        <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded transition">Reserve Table</button>
-                    </form>
-                </div>
+          <h2 class="text-3xl md:text-5xl font-bold mb-4">
+            Reserve Your Table
+          </h2>
 
-                <div class="lg:w-1/2" data-aos="fade-left">
-                    <h3 class="text-2xl font-bold mb-6">Visit Us</h3>
-                    <div class="space-y-6">
-                        <div class="flex items-start">
-                            <i data-feather="map-pin" class="text-amber-600 mt-1 mr-4"></i>
-                            <div>
-                                <h4 class="font-bold mb-2">Location</h4>
-                                <p class="text-gray-300">123 Gourmet Street<br>Food District, FD 12345</p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <i data-feather="clock" class="text-amber-600 mt-1 mr-4"></i>
-                            <div>
-                                <h4 class="font-bold mb-2">Hours</h4>
-                                <p class="text-gray-300">
-                                    Monday - Thursday: 5:00 PM - 10:00 PM<br>
-                                    Friday - Saturday: 5:00 PM - 11:00 PM<br>
-                                    Sunday: 4:00 PM - 9:00 PM
-                                </p>
-                            </div>
-                        </div>
-                        <div class="flex items-start">
-                            <i data-feather="phone" class="text-amber-600 mt-1 mr-4"></i>
-                            <div>
-                                <h4 class="font-bold mb-2">Contact</h4>
-                                <p class="text-gray-300">
-                                    Phone: (123) 456-7890<br>
-                                    Email: info@gourmethaven.com
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+          <div class="w-24 h-1 bg-amber-600 mx-auto"></div>
 
-                    <div class="mt-10">
-                        <h3 class="text-2xl font-bold mb-6">Follow Us</h3>
-                        <div class="flex space-x-4">
-                            <a href="#" class="bg-gray-700 hover:bg-gray-600 w-10 h-10 rounded-full flex items-center justify-center transition">
-                                <i data-feather="facebook" class="text-white"></i>
-                            </a>
-                            <a href="#" class="bg-gray-700 hover:bg-gray-600 w-10 h-10 rounded-full flex items-center justify-center transition">
-                                <i data-feather="instagram" class="text-white"></i>
-                            </a>
-                            <a href="#" class="bg-gray-700 hover:bg-gray-600 w-10 h-10 rounded-full flex items-center justify-center transition">
-                                <i data-feather="twitter" class="text-white"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <p class="text-gray-300 mt-6 max-w-2xl mx-auto">
+            Planning dinner, a celebration or simply craving something
+            delicious? We'd love to have you.
+          </p>
         </div>
+
+        <div class="flex flex-col lg:flex-row gap-14">
+          <!-- Reservation Form -->
+          <div class="lg:w-1/2" data-aos="fade-right">
+            <h3 class="text-2xl font-bold mb-7">Book a Table</h3>
+
+            <form id="reservation-form" class="space-y-6" novalidate>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="name" class="block mb-2 font-medium">
+                    Full Name
+                  </label>
+
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    autocomplete="name"
+                    placeholder="e.g. Daniel Adeyemi"
+                    class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                  />
+                </div>
+
+                <div>
+                  <label for="email" class="block mb-2 font-medium">
+                    Email Address
+                  </label>
+
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                    class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="phone" class="block mb-2 font-medium">
+                    Phone Number
+                  </label>
+
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    required
+                    autocomplete="tel"
+                    placeholder="0803 123 4567"
+                    class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                  />
+                </div>
+
+                <div>
+                  <label for="guests" class="block mb-2 font-medium">
+                    Number of Guests
+                  </label>
+
+                  <select
+                    id="guests"
+                    name="guests"
+                    required
+                    class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                  >
+                    <option value="1">1 Guest</option>
+                    <option value="2" selected>2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4 Guests</option>
+                    <option value="5">5 Guests</option>
+                    <option value="6">6 Guests</option>
+                    <option value="7">7 Guests</option>
+                    <option value="8">8 Guests</option>
+                    <option value="9+">9+ Guests</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="date" class="block mb-2 font-medium">
+                    Date
+                  </label>
+
+                  <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    required
+                    class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                  />
+                </div>
+
+                <div>
+                  <label for="time" class="block mb-2 font-medium">
+                    Time
+                  </label>
+
+                  <select
+                    id="time"
+                    name="time"
+                    required
+                    class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                  >
+                    <option value="5:00 PM">5:00 PM</option>
+                    <option value="5:30 PM">5:30 PM</option>
+                    <option value="6:00 PM">6:00 PM</option>
+                    <option value="6:30 PM">6:30 PM</option>
+                    <option value="7:00 PM">7:00 PM</option>
+                    <option value="7:30 PM">7:30 PM</option>
+                    <option value="8:00 PM">8:00 PM</option>
+                    <option value="8:30 PM">8:30 PM</option>
+                    <option value="9:00 PM">9:00 PM</option>
+                    <option value="9:30 PM">9:30 PM</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label for="message" class="block mb-2 font-medium">
+                  Special Requests
+                </label>
+
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="4"
+                  placeholder="Birthday dinner, window seat, dietary requests..."
+                  class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-600"
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full sm:w-auto bg-amber-600 hover:bg-amber-700 text-white font-bold py-3.5 px-8 rounded-lg transition"
+              >
+                Reserve My Table
+              </button>
+
+              <p class="text-gray-400 text-xs">
+                Your reservation request will be saved in this browser for
+                demonstration purposes.
+              </p>
+            </form>
+          </div>
+
+          <!-- Contact Details -->
+          <div class="lg:w-1/2" data-aos="fade-left">
+            <h3 class="text-2xl font-bold mb-7">Visit Us</h3>
+
+            <div class="space-y-7">
+              <!-- Location -->
+              <div class="flex items-start">
+                <div class="bg-gray-800 rounded-full p-3 mr-4">
+                  <i data-feather="map-pin" class="text-amber-500"></i>
+                </div>
+
+                <div>
+                  <h4 class="font-bold mb-1">Location</h4>
+
+                  <p class="text-gray-300 leading-relaxed">
+                    18 Akin Adesola Street<br />
+                    Victoria Island, Lagos<br />
+                    Nigeria
+                  </p>
+
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=18+Akin+Adesola+Street+Victoria+Island+Lagos"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-block text-amber-500 hover:text-amber-400 mt-2 text-sm font-semibold"
+                  >
+                    Get Directions →
+                  </a>
+                </div>
+              </div>
+
+              <!-- Hours -->
+              <div class="flex items-start">
+                <div class="bg-gray-800 rounded-full p-3 mr-4">
+                  <i data-feather="clock" class="text-amber-500"></i>
+                </div>
+
+                <div>
+                  <h4 class="font-bold mb-1">Opening Hours</h4>
+
+                  <p class="text-gray-300 leading-relaxed">
+                    Monday – Thursday: 12:00 PM – 10:00 PM<br />
+                    Friday – Saturday: 12:00 PM – 11:00 PM<br />
+                    Sunday: 1:00 PM – 9:00 PM
+                  </p>
+                </div>
+              </div>
+
+              <!-- Contact -->
+              <div class="flex items-start">
+                <div class="bg-gray-800 rounded-full p-3 mr-4">
+                  <i data-feather="phone" class="text-amber-500"></i>
+                </div>
+
+                <div>
+                  <h4 class="font-bold mb-1">Contact</h4>
+
+                  <p class="text-gray-300 leading-relaxed">
+                    <a
+                      href="tel:+2348035550198"
+                      class="hover:text-amber-400 transition"
+                    >
+                      +234 803 555 0198
+                    </a>
+                    <br />
+
+                    <a
+                      href="mailto:hello@thelagostable.ng"
+                      class="hover:text-amber-400 transition"
+                    >
+                      hello@thelagostable.ng
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Social -->
+            <div class="mt-10">
+              <h3 class="text-xl font-bold mb-5">Follow The Table</h3>
+
+              <div class="flex gap-3">
+                <a
+                  href="https://www.instagram.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  class="bg-gray-800 hover:bg-amber-600 w-11 h-11 rounded-full flex items-center justify-center transition"
+                >
+                  <i data-feather="instagram"></i>
+                </a>
+
+                <a
+                  href="https://www.facebook.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  class="bg-gray-800 hover:bg-amber-600 w-11 h-11 rounded-full flex items-center justify-center transition"
+                >
+                  <i data-feather="facebook"></i>
+                </a>
+
+                <a
+                  href="https://www.tiktok.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="TikTok"
+                  class="bg-gray-800 hover:bg-amber-600 w-11 h-11 rounded-full flex items-center justify-center transition"
+                >
+                  <span class="font-bold text-sm">TT</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-12">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="flex items-center mb-6 md:mb-0">
-                    <i data-feather="coffee" class="text-amber-600 mr-2"></i>
-                    <span class="text-xl font-bold text-white">Gourmet Haven</span>
-                </div>
-                <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
-                    <a href="#home" class="hover:text-white transition">Home</a>
-                    <a href="#menu" class="hover:text-white transition">Menu</a>
-                    <a href="#about" class="hover:text-white transition">About</a>
-                    <a href="#gallery" class="hover:text-white transition">Gallery</a>
-                    <a href="#contact" class="hover:text-white transition">Contact</a>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
-                <p>&copy; 2023 Gourmet Haven. All rights reserved.</p>
-                <p class="mt-2 text-sm">Designed with <i data-feather="heart" class="text-red-500 inline"></i> for food lovers</p>
-            </div>
+    <!-- =========================
+     GALLERY MODAL
+========================== -->
+    <div
+      id="gallery-modal"
+      class="modal fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-5"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Gallery image"
+    >
+      <div class="modal-content relative max-w-5xl w-full">
+        <button
+          id="gallery-close"
+          type="button"
+          aria-label="Close image"
+          class="absolute -top-12 right-0 text-white hover:text-amber-400 transition"
+        >
+          <i data-feather="x" class="w-8 h-8"></i>
+        </button>
+
+        <img
+          id="modal-image"
+          src=""
+          alt=""
+          class="w-full max-h-[80vh] object-contain rounded-lg"
+        />
+
+        <p
+          id="modal-title"
+          class="text-white text-center mt-4 text-lg font-semibold"
+        ></p>
+      </div>
+    </div>
+
+    <!-- =========================
+     RESERVATION SUCCESS MODAL
+========================== -->
+    <div
+      id="reservation-modal"
+      class="modal fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center p-5"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        class="modal-content bg-white rounded-2xl max-w-md w-full p-8 text-center"
+      >
+        <div
+          class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5"
+        >
+          <i data-feather="check" class="text-green-600 w-8 h-8"></i>
         </div>
+
+        <h3 class="text-2xl font-bold text-gray-800 mb-3">
+          Reservation Received!
+        </h3>
+
+        <p id="reservation-message" class="text-gray-600 leading-relaxed mb-7">
+          Your reservation request has been received.
+        </p>
+
+        <button
+          id="reservation-close"
+          type="button"
+          class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-lg transition"
+        >
+          Done
+        </button>
+      </div>
+    </div>
+
+    <!-- =========================
+     TOAST
+========================== -->
+    <div
+      id="toast"
+      class="toast fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] bg-gray-900 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-2"
+    >
+      <i data-feather="check-circle" class="text-green-400 w-5"></i>
+      <span id="toast-text">Done!</span>
+    </div>
+
+    <!-- =========================
+     FOOTER
+========================== -->
+    <footer class="bg-black text-gray-400 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <a href="#home" class="flex items-center mb-6 md:mb-0">
+            <i data-feather="coffee" class="text-amber-600 mr-2"></i>
+
+            <div>
+              <span class="text-xl font-bold text-white">
+                The Lagos Table
+              </span>
+
+              <p class="text-xs tracking-widest uppercase">
+                Victoria Island, Lagos
+              </p>
+            </div>
+          </a>
+
+          <div class="flex flex-wrap justify-center gap-x-8 gap-y-3">
+            <a href="#home" class="hover:text-white transition">Home</a>
+            <a href="#menu" class="hover:text-white transition">Menu</a>
+            <a href="#about" class="hover:text-white transition">Our Story</a>
+            <a href="#gallery" class="hover:text-white transition">Gallery</a>
+            <a href="#contact" class="hover:text-white transition">Contact</a>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+          <p>
+            &copy; <span id="current-year"></span> The Lagos Table. All rights
+            reserved.
+          </p>
+
+          <p class="mt-2 text-sm flex justify-center items-center gap-1">
+            Made with
+            <i
+              data-feather="heart"
+              class="text-red-500 w-4 h-4 fill-current"
+            ></i>
+            in Lagos.
+          </p>
+        </div>
+      </div>
     </footer>
 
+    <!-- =========================
+     JAVASCRIPT
+========================== -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <script>
-        // Mobile menu toggle
-        document.getElementById('menu-btn').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
+      /* =========================================
+       INITIAL SETUP
+    ========================================== */
 
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
-        });
-
-        // Initialize Feather Icons
+      document.addEventListener("DOMContentLoaded", () => {
+        // Feather icons
         feather.replace();
+
+        // AOS animations
+        AOS.init({
+          duration: 800,
+          easing: "ease-in-out",
+          once: true,
+          offset: 80,
+        });
+
+        // Current year
+        document.getElementById("current-year").textContent =
+          new Date().getFullYear();
+
+        // Set minimum reservation date
+        const dateInput = document.getElementById("date");
+
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, "0");
+        const day = String(today.getDate()).padStart(2, "0");
+
+        dateInput.min = `${year}-${month}-${day}`;
+      });
+
+      /* =========================================
+       MOBILE NAVIGATION
+    ========================================== */
+
+      const menuBtn = document.getElementById("menu-btn");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      menuBtn.addEventListener("click", () => {
+        const isHidden = mobileMenu.classList.contains("hidden");
+
+        mobileMenu.classList.toggle("hidden");
+
+        menuBtn.setAttribute("aria-expanded", isHidden ? "true" : "false");
+
+        menuBtn.innerHTML = isHidden
+          ? '<i data-feather="x"></i>'
+          : '<i data-feather="menu"></i>';
+
+        feather.replace();
+      });
+
+      // Close mobile menu when a link is clicked
+      document.querySelectorAll(".mobile-link").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenu.classList.add("hidden");
+
+          menuBtn.setAttribute("aria-expanded", "false");
+
+          menuBtn.innerHTML = '<i data-feather="menu"></i>';
+
+          feather.replace();
+        });
+      });
+
+      /* =========================================
+       NAVBAR SCROLL EFFECT
+    ========================================== */
+
+      const navbar = document.getElementById("navbar");
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 40) {
+          navbar.classList.add("nav-scrolled");
+        } else {
+          navbar.classList.remove("nav-scrolled");
+        }
+      });
+
+      /* =========================================
+       GALLERY LIGHTBOX
+    ========================================== */
+
+      const galleryModal = document.getElementById("gallery-modal");
+      const modalImage = document.getElementById("modal-image");
+      const modalTitle = document.getElementById("modal-title");
+      const galleryClose = document.getElementById("gallery-close");
+
+      document.querySelectorAll(".gallery-card").forEach((card) => {
+        card.addEventListener("click", () => {
+          const image = card.dataset.image;
+          const title = card.dataset.title;
+
+          modalImage.src = image;
+          modalImage.alt = title;
+          modalTitle.textContent = title;
+
+          galleryModal.classList.add("active");
+
+          document.body.style.overflow = "hidden";
+        });
+      });
+
+      function closeGallery() {
+        galleryModal.classList.remove("active");
+
+        document.body.style.overflow = "";
+      }
+
+      galleryClose.addEventListener("click", closeGallery);
+
+      galleryModal.addEventListener("click", (event) => {
+        if (event.target === galleryModal) {
+          closeGallery();
+        }
+      });
+
+      /* =========================================
+       ESCAPE KEY
+    ========================================== */
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          galleryModal.classList.remove("active");
+          reservationModal.classList.remove("active");
+
+          document.body.style.overflow = "";
+        }
+      });
+
+      /* =========================================
+       RESERVATION SYSTEM
+    ========================================== */
+
+      const reservationForm = document.getElementById("reservation-form");
+
+      const reservationModal = document.getElementById("reservation-modal");
+
+      const reservationClose = document.getElementById("reservation-close");
+
+      const reservationMessage = document.getElementById("reservation-message");
+
+      reservationForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        // Validate form
+        if (!reservationForm.checkValidity()) {
+          reservationForm.reportValidity();
+
+          return;
+        }
+
+        const name = document.getElementById("name").value.trim();
+
+        const email = document.getElementById("email").value.trim();
+
+        const phone = document.getElementById("phone").value.trim();
+
+        const guests = document.getElementById("guests").value;
+
+        const date = document.getElementById("date").value;
+
+        const time = document.getElementById("time").value;
+
+        const message = document.getElementById("message").value.trim();
+
+        // Nigerian phone validation
+        const phonePattern =
+          /^(?:\+234|0)(?:70|80|81|90|91|802|803|806|807|808|809|810|811|812|813|814|815|816|817|818|819|901|902|903|904|905|906|907|908|909)\d{7}$/;
+
+        const cleanPhone = phone.replace(/[\s-]/g, "");
+
+        if (!phonePattern.test(cleanPhone)) {
+          showToast("Please enter a valid Nigerian phone number.");
+
+          document.getElementById("phone").focus();
+
+          return;
+        }
+
+        // Prevent past dates
+        const selectedDate = new Date(`${date}T00:00:00`);
+
+        const today = new Date();
+
+        today.setHours(0, 0, 0, 0);
+
+        if (selectedDate < today) {
+          showToast("Please choose a future date.");
+
+          return;
+        }
+
+        // Create reservation object
+        const reservation = {
+          id: "TL-" + Date.now(),
+
+          name,
+          email,
+          phone,
+          guests,
+          date,
+          time,
+          message,
+
+          createdAt: new Date().toISOString(),
+        };
+
+        // Retrieve existing reservations
+        const existingReservations =
+          JSON.parse(localStorage.getItem("lagosTableReservations")) || [];
+
+        // Save new reservation
+        existingReservations.push(reservation);
+
+        localStorage.setItem(
+          "lagosTableReservations",
+          JSON.stringify(existingReservations),
+        );
+
+        // Format date for display
+        const formattedDate = selectedDate.toLocaleDateString("en-NG", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+
+        // Confirmation message
+        reservationMessage.innerHTML = `
+            Thank you, <strong>${escapeHTML(name)}</strong>!<br><br>
+            Your request for <strong>${escapeHTML(guests)} guest${guests === "1" ? "" : "s"}</strong>
+            on <strong>${escapeHTML(formattedDate)}</strong>
+            at <strong>${escapeHTML(time)}</strong>
+            has been received.<br><br>
+            We'll contact you on <strong>${escapeHTML(phone)}</strong>
+            to confirm your table.
+        `;
+
+        // Show modal
+        reservationModal.classList.add("active");
+
+        document.body.style.overflow = "hidden";
+
+        // Reset form
+        reservationForm.reset();
+      });
+
+      /* =========================================
+       CLOSE RESERVATION MODAL
+    ========================================== */
+
+      function closeReservation() {
+        reservationModal.classList.remove("active");
+
+        document.body.style.overflow = "";
+      }
+
+      reservationClose.addEventListener("click", closeReservation);
+
+      reservationModal.addEventListener("click", (event) => {
+        if (event.target === reservationModal) {
+          closeReservation();
+        }
+      });
+
+      /* =========================================
+       TOAST NOTIFICATION
+    ========================================== */
+
+      const toast = document.getElementById("toast");
+
+      const toastText = document.getElementById("toast-text");
+
+      let toastTimeout;
+
+      function showToast(message) {
+        toastText.textContent = message;
+
+        toast.classList.add("show");
+
+        clearTimeout(toastTimeout);
+
+        toastTimeout = setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3500);
+      }
+
+      /* =========================================
+       HTML ESCAPE
+       Prevents user-entered names/messages
+       from being interpreted as HTML.
+    ========================================== */
+
+      function escapeHTML(value) {
+        return value
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
     </script>
-</body>
+  </body>
 </html>
